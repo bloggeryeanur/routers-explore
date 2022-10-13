@@ -1,20 +1,20 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
-import Friend from './MyFriend/Friend';
+import Friend from '../Friend/Friend';
 
 const Friends = () => {
     const friends = useLoaderData()
     return (
         <div>
-            <h2>I don't have helpful firends {friends.length} </h2>
+            <h2>Firdndssssssss {friends.length}</h2>
             {
                 friends.map(friend => <Friend
-                    key={friend.id}
-                    friend={friend}
+                key={friend.id}
+                friend={friend}
                 ></Friend>)
             }
         </div>
     );
 };
- 
+
 export default Friends;

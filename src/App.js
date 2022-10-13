@@ -1,53 +1,51 @@
-import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './component/Home';
-import About from './component/About';
-import Product from './component/Product';
-import Main from './layout/Main';
-import Friends from './component/Friends';
-import FriendDetails from './component/FriendDetails/FriendDetails';
+import React from 'react';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import About from './component/About/About';
+import Contac from './component/Contac/Contac';
+import Friends from './component/Friends/Friends';
+import FriendsDetails from './component/FriendsDetails/FriendsDetails';
+import Home from './component/Home/Home';
+import Main from './component/layout/Main';
 
 
-function App() {
-
-  const router = createBrowserRouter([
+const App = () => {
+  const getRouter = createBrowserRouter([
     {
-      path: '/',
-      element: <Main></Main>,
+      path: '/', element:
+        <Main></Main>,
       children: [
-
         { path: '/', element: <Home></Home> },
         { path: '/home', element: <Home></Home> },
-        { path: 'about', element: <About></About> },
+        { path: '/contac', element: <Contac></Contac> },
+        { path: '/about', element: <About></About> },
         {
           path: '/friends',
           loader: async () => {
             return fetch('https://jsonplaceholder.typicode.com/users')
+
           },
+
           element: <Friends></Friends>
         },
         {
-          path: '/friends/:friendId',
-          loader: async ({ params }) => {
+          path: '/friend/:friendId',
+          loader: async({params})=>{
             // console.log(params.friendId)
-            return (`https://jsonplaceholder.typicode.com/users/${params.friendId}`)
+            return fetch(`https://jsonplaceholder.typicode.com/users/${params.friendId}`)
           },
-          element: <FriendDetails></FriendDetails>
-        }
+          element: <FriendsDetails></FriendsDetails>
+        },
       ]
-
     },
-
-    { path: '/product', element: <Product></Product> },
-    { path: '*', element: <div>Not Found : 404</div> }
+    { path: '*', element: <h2>404 NOT FOUND</h2> }
 
   ])
   return (
-    <div className="App">
-
-      <RouterProvider router={router}></RouterProvider>
+    <div className='App'>
+      <Outlet></Outlet>
+      <RouterProvider router={getRouter}></RouterProvider>
     </div>
   );
-}
+};
 
 export default App;
